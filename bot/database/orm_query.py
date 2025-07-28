@@ -18,3 +18,9 @@ async def check_time(session: AsyncSession):
     query = select(Users)
     result = await session.execute(query)
     return result.scalars().all()
+
+
+async def orm_delete_user(session: AsyncSession, user_id: int):
+    query = delete(Users).where(Users.id == user_id)
+    await session.execute(query)
+    await session.commit()
