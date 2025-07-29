@@ -5,7 +5,7 @@ import asyncio
 import os
 
 from bot.check_subscriptions import check_subscriptions
-from bot.handlers import payment, start
+from bot.handlers import payment, start, accident
 from bot.database.engine import create_database, drop_database, session_maker
 from dotenv import load_dotenv
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -31,7 +31,7 @@ async def on_shutdown(bot):
 async def main():
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
-    dp.include_routers(payment.router, start.router )
+    dp.include_routers(payment.router, start.router, accident.router )
     dp.update.middleware(DataBaseSession(session_pool=session_maker))
     await create_database()
     scheduler.add_job(

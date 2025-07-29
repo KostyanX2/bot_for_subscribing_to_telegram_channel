@@ -20,7 +20,7 @@ async def check_subscriptions(bot):
         for user in data:
             chat_member = await bot.get_chat_member(os.getenv("CHANNEL_ID"), user.user_id)
             days_left = (user.time - now).days
-            if days_left > 7:
+            if days_left <= 7:
                 await bot.send_message(chat_id=user.user_id, text=f"У вас осталось {days_left} активных дней подписки, продлить:", reply_markup=extend_choice_pay())
             if days_left <= 0 and chat_member.status != ChatMemberStatus.ADMINISTRATOR and chat_member.status != ChatMemberStatus.CREATOR:
                 await bot.ban_chat_member(
